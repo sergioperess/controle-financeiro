@@ -71,7 +71,7 @@ public class PersonController {
         return ResponseEntity.ok(service.findAll(pageable));
     }
 
-    /*@GetMapping(value = "/findPeopleByName/{firstName}",
+    @GetMapping(value = "/findPeopleByName/{firstName}",
         produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML ,  MediaType.APPLICATION_YAML})
 
     @Operation(summary = "Listar pessoas pelo nome", description = "Listar pessoas pelo nome",
@@ -104,7 +104,7 @@ public class PersonController {
 
         Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection,"firstName"));
         return ResponseEntity.ok(service.findPeopleByName(firstName,pageable));
-    }*/
+    }
 
 
     // Permite acesso apenas pelo localhosta da porta 8080

@@ -62,7 +62,7 @@ public class PersonServices {
         return vo;
     }
 
-    /*public PagedModel<EntityModel<PersonVO>> findPeopleByName(String firstname, Pageable pageable){
+    public PagedModel<EntityModel<PersonVO>> findPeopleByName(String firstname, Pageable pageable){
         logger.info("Procurar pessoa pelo nome");
         
         var personPage = repository.findPeopleByName(firstname, pageable);
@@ -76,7 +76,7 @@ public class PersonServices {
             , pageable.getPageSize(), "asc")).withSelfRel();
 
         return assembler.toModel(personVosPage, link);
-    }*/
+    }
 
     public PersonVO create(PersonVO person){
         if(person == null) throw new RequiredObjectIsNullException();
