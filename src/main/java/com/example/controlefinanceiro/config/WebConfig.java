@@ -12,8 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.controlefinanceiro.serializationconverter.YamlJacksonHttpMessageConverter;
 
-
-
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 

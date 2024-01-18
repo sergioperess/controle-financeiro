@@ -41,7 +41,7 @@ public class PersonController {
     @GetMapping(produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML ,  MediaType.APPLICATION_YAML})
 
     @Operation(summary = "Listar todas as pessoas", description = "Listar todas as pessoas",
-        tags = {"People"},
+        tags = {"Controle Financeiro"},
         responses = {
                 @ApiResponse(description = "Success", responseCode = "200",
                         content = { 
@@ -71,7 +71,7 @@ public class PersonController {
         return ResponseEntity.ok(service.findAll(pageable));
     }
 
-    @GetMapping(value = "/findPeopleByName/{firstName}",
+    /*@GetMapping(value = "/findPeopleByName/{firstName}",
         produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML ,  MediaType.APPLICATION_YAML})
 
     @Operation(summary = "Listar pessoas pelo nome", description = "Listar pessoas pelo nome",
@@ -104,7 +104,7 @@ public class PersonController {
 
         Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection,"firstName"));
         return ResponseEntity.ok(service.findPeopleByName(firstName,pageable));
-    }
+    }*/
 
 
     // Permite acesso apenas pelo localhosta da porta 8080
@@ -112,7 +112,7 @@ public class PersonController {
     // Entre chaves é necessário passar parâmetros obrigatórios
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.APPLICATION_YAML})
     @Operation(summary = "Listar uma pessoa pelo id", description = "Listar uma pessoa pelo id",
-        tags = {"People"},
+        tags = {"Controle Financeiro"},
         responses = {
                 @ApiResponse(description = "Success", responseCode = "200",
                         content = @Content(schema = @Schema(implementation = PersonVO.class))
@@ -132,7 +132,7 @@ public class PersonController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.APPLICATION_YAML},
                 produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML ,  MediaType.APPLICATION_YAML})
     @Operation(summary = "Adcionar uma pessoa", description = "Adicionar uma pessoa passando JSON, XML ou YAML",
-        tags = {"People"},
+        tags = {"Controle Financeiro"},
         responses = {
                 @ApiResponse(description = "Created", responseCode = "200",
                         content = @Content(schema = @Schema(implementation = PersonVO.class))
@@ -149,7 +149,7 @@ public class PersonController {
     @PutMapping(consumes = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.APPLICATION_YAML},
                 produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.APPLICATION_YAML})
     @Operation(summary = "Atualizar uma informação da pessoa pelo id", description = "Atualizar uma informação da pessoa pelo id",
-        tags = {"People"},
+        tags = {"Controle Financeiro"},
         responses = {
                 @ApiResponse(description = "Updated", responseCode = "200",
                         content = @Content(schema = @Schema(implementation = PersonVO.class))
@@ -166,7 +166,7 @@ public class PersonController {
 
     @DeleteMapping(value = "/{id}")
     @Operation(summary = "Apagar uma pessoa pelo id", description = "Apagar uma pessoa pelo id",
-        tags = {"People"},
+        tags = {"Controle Financeiro"},
         responses = {
                 @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                 @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content), 

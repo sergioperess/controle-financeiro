@@ -2,11 +2,15 @@ package com.example.controlefinanceiro.data;
 
 import java.io.Serializable;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"id, fistName, lastName, saldo, userName, password"})
-public class PersonVO implements Serializable {
+public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @JsonProperty("id")
     private Long key;
@@ -14,7 +18,7 @@ public class PersonVO implements Serializable {
     private String lastName;
     private String userName;
     private String password;
-    private Long saldo;
+    private float saldo;
 
     
     public PersonVO() {
@@ -46,11 +50,11 @@ public class PersonVO implements Serializable {
         this.password = password;
     }
 
-    public Long getSaldo() {
+    public float getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(Long saldo) {
+    public void setSaldo(float saldo) {
         this.saldo = saldo;
     }
 
@@ -66,12 +70,12 @@ public class PersonVO implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) (key ^ (key >>> 32));
+        result = prime * result + ((key == null) ? 0 : key.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((userName == null) ? 0 : userName.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
-        result = prime * result + ((saldo == null) ? 0 : saldo.hashCode());
+        result = prime * result + Float.floatToIntBits(saldo);
         return result;
     }
 
@@ -84,7 +88,10 @@ public class PersonVO implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         PersonVO other = (PersonVO) obj;
-        if (key != other.key)
+        if (key == null) {
+            if (other.key != null)
+                return false;
+        } else if (!key.equals(other.key))
             return false;
         if (firstName == null) {
             if (other.firstName != null)
@@ -106,10 +113,7 @@ public class PersonVO implements Serializable {
                 return false;
         } else if (!password.equals(other.password))
             return false;
-        if (saldo == null) {
-            if (other.saldo != null)
-                return false;
-        } else if (!saldo.equals(other.saldo))
+        if (Float.floatToIntBits(saldo) != Float.floatToIntBits(other.saldo))
             return false;
         return true;
     }

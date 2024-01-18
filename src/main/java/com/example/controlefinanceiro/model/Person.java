@@ -14,6 +14,8 @@ import jakarta.persistence.Table;
 @Table(name = "person")
 public class Person implements Serializable{
 
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,8 +27,8 @@ public class Person implements Serializable{
     private String userName;
     @Column(nullable = false, length = 100)
     private String password;
-    @Column(nullable = false, length = 20)
-    private Long saldo;
+    @Column(nullable = false)
+    private float saldo;
 
     
     public Person() {
@@ -83,12 +85,12 @@ public class Person implements Serializable{
     }
 
 
-    public Long getSaldo() {
+    public float getSaldo() {
         return saldo;
     }
 
 
-    public void setSaldo(Long saldo) {
+    public void setSaldo(float saldo) {
         this.saldo = saldo;
     }
 
@@ -97,12 +99,12 @@ public class Person implements Serializable{
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((userName == null) ? 0 : userName.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
-        result = prime * result + ((saldo == null) ? 0 : saldo.hashCode());
+        result = prime * result + Float.floatToIntBits(saldo);
         return result;
     }
 
@@ -116,7 +118,10 @@ public class Person implements Serializable{
         if (getClass() != obj.getClass())
             return false;
         Person other = (Person) obj;
-        if (id != other.id)
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
             return false;
         if (firstName == null) {
             if (other.firstName != null)
@@ -138,14 +143,10 @@ public class Person implements Serializable{
                 return false;
         } else if (!password.equals(other.password))
             return false;
-        if (saldo == null) {
-            if (other.saldo != null)
-                return false;
-        } else if (!saldo.equals(other.saldo))
+        if (Float.floatToIntBits(saldo) != Float.floatToIntBits(other.saldo))
             return false;
         return true;
     }
-
 
    
 
