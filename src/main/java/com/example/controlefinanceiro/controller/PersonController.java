@@ -75,7 +75,7 @@ public class PersonController {
         produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML ,  MediaType.APPLICATION_YAML})
 
     @Operation(summary = "Listar pessoas pelo nome", description = "Listar pessoas pelo nome",
-        tags = {"People"},
+        tags = {"Controle Financeiro"},
         responses = {
                 @ApiResponse(description = "Success", responseCode = "200",
                         content = { 

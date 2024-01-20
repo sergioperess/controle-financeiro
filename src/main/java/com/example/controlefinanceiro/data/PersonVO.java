@@ -7,13 +7,13 @@ import org.springframework.hateoas.RepresentationModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"id, fistName, lastName, saldo, userName, password"})
+@JsonPropertyOrder({"id", "firstName", "lastName", "saldo", "userName", "password"})
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("id")
-    private Long key;
+    private long key;
     private String firstName;
     private String lastName;
     private String userName;
@@ -24,53 +24,71 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     public PersonVO() {
 
     }
-   
-    public String getFirstName() {
-        return firstName;
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    public String getUserName() {
-        return userName;
-    }
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public float getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(float saldo) {
-        this.saldo = saldo;
-    }
 
     public long getKey() {
         return key;
     }
 
+
     public void setKey(long key) {
         this.key = key;
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+
+    public String getLastName() {
+        return lastName;
+    }
+
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public float getSaldo() {
+        return saldo;
+    }
+
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + ((key == null) ? 0 : key.hashCode());
+        int result = super.hashCode();
+        result = prime * result + (int) (key ^ (key >>> 32));
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((userName == null) ? 0 : userName.hashCode());
@@ -83,15 +101,12 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
+        if (!super.equals(obj))
             return false;
         if (getClass() != obj.getClass())
             return false;
         PersonVO other = (PersonVO) obj;
-        if (key == null) {
-            if (other.key != null)
-                return false;
-        } else if (!key.equals(other.key))
+        if (key != other.key)
             return false;
         if (firstName == null) {
             if (other.firstName != null)
@@ -117,6 +132,7 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
             return false;
         return true;
     }
-
+   
+    
 
 }
