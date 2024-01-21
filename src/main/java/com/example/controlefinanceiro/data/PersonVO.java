@@ -4,10 +4,11 @@ import java.io.Serializable;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import com.example.controlefinanceiro.model.UserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"id", "firstName", "lastName", "saldo", "userName", "password"})
+@JsonPropertyOrder({"id", "firstName", "lastName", "saldo", "userName", "password", "role"})
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -19,10 +20,17 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     private String userName;
     private String password;
     private float saldo;
+    private UserRole role;
 
     
     public PersonVO() {
 
+    }
+
+    public PersonVO(String userName, String password, UserRole role){
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
     }
 
     public long getKey() {
@@ -84,6 +92,18 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
         this.saldo = saldo;
     }
 
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -94,6 +114,7 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
         result = prime * result + ((userName == null) ? 0 : userName.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + Float.floatToIntBits(saldo);
+        result = prime * result + ((role == null) ? 0 : role.hashCode());
         return result;
     }
 
@@ -130,8 +151,11 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
             return false;
         if (Float.floatToIntBits(saldo) != Float.floatToIntBits(other.saldo))
             return false;
+        if (role != other.role)
+            return false;
         return true;
     }
+
    
     
 
