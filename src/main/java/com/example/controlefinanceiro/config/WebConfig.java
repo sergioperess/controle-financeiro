@@ -13,32 +13,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.example.controlefinanceiro.serializationconverter.YamlJacksonHttpMessageConverter;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer{
+public class WebConfig implements WebMvcConfigurer {
 
     private static final MediaType MEDIA_TYPE_APPLICATION_YAML = MediaType.valueOf("application/x-yaml");
 
     @Value("${spring.graphql.cors.allowed-origin-patterns:default}")
-    private String corsOriginPatterns = "";
+    private String corsOriginPatterns;
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        // https://www.baeldung.com/spring-mvc-content-negotiation-json-xml
-        // via EXTENCION. http://localhost:8080/api/person/v1.xml
-        
-        /*// via QUERY PARAM. http://localhost:8080/api/person/v1?mediaType=xml
-       
-        //aceita parâmetros
-        configurer.favorParameter(true).parameterName("mediaType")
-            .ignoreAcceptHeader(true).useRegisteredExtensionsOnly(false)
-            .defaultContentType(MediaType.APPLICATION_JSON).mediaType("json", MediaType.APPLICATION_JSON)
-            .mediaType("xml", MediaType.APPLICATION_XML);*/
-
-        // via HEADER PARAM. http://localhost:8080/api/person/v1
-
         configurer.favorParameter(false)
-            .ignoreAcceptHeader(false).useRegisteredExtensionsOnly(false)
-            .defaultContentType(MediaType.APPLICATION_JSON).mediaType("json", MediaType.APPLICATION_JSON)
-            .mediaType("xml", MediaType.APPLICATION_XML).mediaType("x-yaml", MEDIA_TYPE_APPLICATION_YAML);
+            .ignoreAcceptHeader(false)
+            .useRegisteredExtensionsOnly(false)
+            .defaultContentType(MediaType.APPLICATION_JSON)
+            .mediaType("json", MediaType.APPLICATION_JSON)
+            .mediaType("xml", MediaType.APPLICATION_XML)
+            .mediaType("x-yaml", MEDIA_TYPE_APPLICATION_YAML);
     }
 
     @Override
@@ -48,12 +38,10 @@ public class WebConfig implements WebMvcConfigurer{
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        var allowedOrigins = corsOriginPatterns.split(",");
+        String[] allowedOrigins = corsOriginPatterns.split(",");
         registry.addMapping("/**")
-            //.allowedMethods("GET", "POST", "PUT")
             .allowedMethods("*")
             .allowedOrigins(allowedOrigins)
             .allowCredentials(true);
     }
-    
 }
