@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.token.TokenService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +15,7 @@ import com.example.controlefinanceiro.data.RegisterVO;
 import com.example.controlefinanceiro.mapper.Mapper;
 import com.example.controlefinanceiro.model.Person;
 import com.example.controlefinanceiro.repository.PersonRepository;
+import com.example.controlefinanceiro.security.JwtService; // Importe a classe correta
 
 import jakarta.validation.Valid;
 
@@ -31,21 +30,23 @@ public class AuthController {
     private PersonRepository repository;
 
     @Autowired
-    private TokenService tokenService;
-
+    private JwtService jwtService; 
     @PostMapping(value = "/login")
-    public ResponseEntity login(@RequestBody @Valid AccountCredentialVO data){
+    public ResponseEntity<String> login(@RequestBody @Valid AccountCredentialVO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.getLogin(), data.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        var token = tokenService.generateToken((PersonVO) auth.getPrincipal());
+        var token = jwtService.generateToken((PersonVO) auth.getPrincipal());
 
-        return ResponseEntity.ok().build();
+        // Retornar o token na resposta
+        return ResponseEntity.ok(token);
     }
 
-    @PostMapping(value = "/resgister")
-    public ResponseEntity register(@RequestBody @Valid RegisterVO data){
-        if(this.repository.findByUserName(data.getLogin()) != null) return ResponseEntity.badRequest().build();
+    @PostMapping(value = "/register")
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterVO data) {
+        if (this.repository.findByUserName(data.getLogin()) != null) {
+            return ResponseEntity.badRequest().build();
+        }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
 
@@ -53,7 +54,6 @@ public class AuthController {
 
         Mapper.parseObject(repository.save(Mapper.parseObject(newPerson, Person.class)), PersonVO.class);
 
-        return ResponseEntity.ok().build();
-
+        return ResponseEntity.ok("User registered successfully");
     }
 }
