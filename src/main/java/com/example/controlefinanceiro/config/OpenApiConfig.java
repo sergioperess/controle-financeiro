@@ -11,14 +11,25 @@ import io.swagger.v3.oas.models.info.License;
 public class OpenApiConfig {
     
     @Bean
-    OpenAPI customOpenAPI(){
+    /**
+     * Configuração personalizada para o OpenAPI.
+     * @return Instância do OpenAPI configurada.
+     */
+    OpenAPI customOpenAPI() {
+        final String apiTitle = "RESTful API with Java";
+        final String apiVersion = "v1";
+        final String apiDescription = "Description of API";
+        final String termsOfServiceUrl = "http://springcourse.com.br/swagger";
+        final String licenseName = "Apache 2.0";
+        final String licenseUrl = "http://springcourse.com.br/swagger"; 
+
         return new OpenAPI()
             .info(new Info()
-            .title("RESTful API with Java")
-            .version("v1")
-            .description("Description of API")
-            .termsOfService("http://springcourse.com.br/swagger")
-            .license(new License().name("Apache 2.0")
-                        .url("http://springcourse.com.br/swagger")));
+                .title(apiTitle)
+                .version(apiVersion)
+                .description(apiDescription)
+                .termsOfService(termsOfServiceUrl)
+                .license(new License().name(licenseName).url(licenseUrl)));
     }
 }
+
